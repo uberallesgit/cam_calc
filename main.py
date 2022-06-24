@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 from openpyexcel import load_workbook
 import csv
+import math
 import numpy as np
 
 
@@ -37,7 +38,7 @@ def cam_calc_1():
             writer.writerow(("№","Наименование","Цена","количество","Сумма"))
 
         counter = 1
-        list = [2,14,15,17]
+        list = [2,15,16]
         for i in list:
              with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8",newline="") as file:
                  writer = csv.writer(file)
@@ -46,9 +47,9 @@ def cam_calc_1():
         #Единичные товары(жесткий, рег)
         with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8",newline="") as file:
             writer = csv.writer(file)
-            writer.writerow((counter, sheet[f"a{16}"].value, sheet[f"B{16}"].value, cable, int(sheet[f"B{16}"].value) * int(cable)))
+            writer.writerow((counter, sheet[f"a{17}"].value, sheet[f"B{17}"].value, cable, int(sheet[f"B{17}"].value) * int(cable)))
             counter+=1
-            writer.writerow((counter, sheet[f"a{10}"].value, sheet[f"B{10}"].value, 1, int(sheet[f"B{10}"].value) * 1))
+            writer.writerow((counter, sheet[f"a{11}"].value, sheet[f"B{11}"].value, 1, int(sheet[f"B{11}"].value) * 1))
             counter+=1
             writer.writerow((counter, sheet[f"a{4}"].value, sheet[f"B{4}"].value, 1, int(sheet[f"B{4}"].value) * 1))
             counter += 1
@@ -70,25 +71,26 @@ def cam_calc_1():
             with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8",
                       newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow((counter, sheet[f"a{13}"].value, sheet[f"B{13}"].value, 1,
-                                 int(sheet[f"B{13}"].value) * 1))
-                power_supply = int(sheet[f"B{13}"].value)
+                writer.writerow((counter, sheet[f"a{14}"].value, sheet[f"B{14}"].value, 1,
+                                 int(sheet[f"B{14}"].value) * 1))
+                power_supply = int(sheet[f"B{14}"].value)
         elif int(quantity) >= 2 and int(quantity) < 4 :
             with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8",
                       newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow((counter, sheet[f"a{12}"].value, sheet[f"B{12}"].value, 1,
-                                 int(sheet[f"B{12}"].value) * 1))
-                power_supply = int(sheet[f"B{12}"].value)
+                writer.writerow((counter, sheet[f"a{13}"].value, sheet[f"B{13}"].value, 1,
+                                 int(sheet[f"B{13}"].value) * 1))
+                power_supply = int(sheet[f"B{13}"].value)
         else:
             #Формула количества блоков питания, PSQ
-            psq = round(int(quantity)/7.5)
+            psq = math.ceil(int(quantity)/7)
+            print(psq)
             with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8",
                       newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow((counter, sheet[f"a{12}"].value, sheet[f"B{12}"].value, psq,
-                                 int(sheet[f"B{12}"].value) * psq))
-                power_supply = int(sheet[f"B{12}"].value) * psq
+                writer.writerow((counter, sheet[f"a{13}"].value, sheet[f"B{13}"].value, psq,
+                                 int(sheet[f"B{13}"].value) * psq))
+                power_supply = int(sheet[f"B{13}"].value) * psq
 
 
 
@@ -101,7 +103,7 @@ def cam_calc_1():
         #Итого
         with open(f"Видеонаблюдение для {client.capitalize()} на {today_is()}.csv", "a", encoding="utf-8") as file:
             writer = csv.writer(file)
-            writer.writerow(("Итого","","","", sum1+sum2+sum_cab+power_supply))
+            writer.writerow(("","Итого","","", sum1+sum2+sum_cab+power_supply))
 
 
 
